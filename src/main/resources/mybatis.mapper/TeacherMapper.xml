@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.parth.StudentManagementMyBatisJwt.repository.TeacherRepository">
+    <resultMap id="TeacherResultMap" type="com.parth.StudentManagementMyBatisJwt.model.TeacherEntity">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="age" column="age" />
+        <result property="email" column="email" />
+        <result property="city" column="city" />
+        <collection property="subjects" ofType="com.parth.StudentManagementMyBatisJwt.model.TeacherEntity" column="id" select="selectSubjectsForTeacher" javaType="ArrayList" />
+    </resultMap>
+
+    <resultMap id="TeacherInfoResultMap" type="com.parth.StudentManagementMyBatisJwt.model.TeacherEntity">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="age" column="age" />
+        <result property="email" column="email" />
+        <result property="city" column="city" />
+    </resultMap>
+
+    <select id="findAllTeachers" resultMap="TeacherInfoResultMap" >
+        select id, name, age, email, city from teacher
+    </select>
+
+    <select id="findTeacherById" resultMap="TeacherInfoResultMap" parameterType="java.lang.Long">
+        select id, name, age, email, city from teacher where id = #{id}
+    </select>
+
+    <select id="findSubjectsByTeacherId" resultMap="TeacherResultMap" parameterType="java.lang.Long">
+        select * from teacher where id = #{id}
+    </select>
+
+    <select id="selectSubjectsForTeacher" parameterType="java.lang.Long" resultType="com.parth.StudentManagementMyBatisJwt.model.SubjectEntity" >
+        select * from subject where teacher_id = #{id}
+    </select>
+
+    <insert id="addTeacher" parameterType="com.parth.StudentManagementMyBatisJwt.model.TeacherEntity" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into teacher (name, age, email, city) values (#{name}, #{age}, #{email}, #{city})
+    </insert>
+</mapper>

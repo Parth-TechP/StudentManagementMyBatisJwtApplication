@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.parth.StudentManagementMyBatisJwt.repository.StudentRepository">
+    <resultMap id="StudentResultMap" type="com.parth.StudentManagementMyBatisJwt.model.StudentEntity">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="age" column="age" />
+        <result property="email" column="email" />
+        <result property="city" column="city" />
+        <collection property="subjects" ofType="com.parth.StudentManagementMyBatisJwt.model.SubjectEntity" column="id" select="selectSubjectsForStudent" javaType="ArrayList" />
+    </resultMap>
+
+    <resultMap id="StudentInfoResultMap" type="com.parth.StudentManagementMyBatisJwt.model.StudentEntity">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="age" column="age" />
+        <result property="email" column="email" />
+        <result property="city" column="city" />
+    </resultMap>
+
+        <select id="findAllStudents" parameterType="map" resultMap="StudentInfoResultMap" >
+            select id, name, age, email, city from student
+            <where>
+                <if test="name != null">
+                    AND name like #{name}
+                </if>
+                <if test="city != null">
+                    AND city like #{city}
+                </if>
+                <if test="age != null">
+                    AND age = #{age}
+                </if>
+            </where>
+        </select>
+
+    <select id="findStudentById" resultMap="StudentInfoResultMap" parameterType="java.lang.Long">
+        select id, name, age, email, city from student where id = #{id}
+    </select>
+
+    <select id="findSubjectsByStudentId"  resultMap="StudentResultMap" parameterType="java.lang.Long">
+        select * from student where id = #{id}
+    </select>
+
+    <select id="selectSubjectsForStudent" parameterType="java.lang.Long" resultType="com.parth.StudentManagementMyBatisJwt.model.SubjectEntity" >
+        select s.id, s.name, s.credits from subject s INNER JOIN student_subject ss on s.id = ss.subject_id where ss.student_id = #{id}
+    </select>
+
+    <insert id="addStudent" parameterType="com.parth.StudentManagementMyBatisJwt.model.StudentEntity" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        insert into student (name, age, email, city) values (#{name}, #{age}, #{email}, #{city})
+    </insert>
+
+    <insert id="assignSubjectsToStudent" parameterType="map">
+        <foreach collection="subjectIds" item="subjectId" separator=";" >
+            INSERT INTO student_subject (student_id, subject_id) VALUES (#{studentId}, #{subjectId})
+        </foreach>
+    </insert>
+</mapper>

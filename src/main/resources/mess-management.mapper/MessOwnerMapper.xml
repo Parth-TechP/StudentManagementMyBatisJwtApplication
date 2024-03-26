@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.parth.StudentManagementMyBatisJwt.repository.messmanagement.MessOwnerRepository">
+    <resultMap id="MessOwnerResultMap" type="com.parth.StudentManagementMyBatisJwt.model.messmanagement.MessOwnerEntity" >
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="contactNumber" column="contact_number" />
+        <result property="email" column="email" />
+        <association property="mess" column="mess_id" javaType="com.parth.StudentManagementMyBatisJwt.model.messmanagement.MessEntity" select="selectMessForMessOwner" />
+    </resultMap>
+
+    <select id="findAllMessOwners" resultMap="MessOwnerResultMap" >
+        select * from mess_owner;
+    </select>
+
+    <select id="findOwnersByMessId" resultMap="MessOwnerResultMap" parameterType="java.lang.Long">
+        select id, name, contact_number, email, mess_id from mess_owner where  mess_id = #{messId}
+    </select>
+
+    <select id="selectMessForMessOwner" resultMap="com.parth.StudentManagementMyBatisJwt.repository.messmanagement.MessRepository.MessResultMap" >
+        select m.id, m.name, m.mess_type, m.location from mess m INNER JOIN mess_owner mo ON m.id = mo.mess_id where mo.id = #{id}
+    </select>
+
+    <insert id="addMessOwner" keyProperty="id" keyColumn="id" useGeneratedKeys="true" parameterType="com.parth.StudentManagementMyBatisJwt.model.messmanagement.MessOwnerEntity" >
+        insert into mess_owner (name, contact_number, email, mess_id) values (#{name}, #{contactNumber}, #{email}, #{mess.id})
+    </insert>
+</mapper>
