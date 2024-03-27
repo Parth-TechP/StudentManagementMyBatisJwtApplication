@@ -9,11 +9,13 @@ import com.parth.StudentManagementMyBatisJwt.exceptions.ResourceNotFoundExceptio
 import com.parth.StudentManagementMyBatisJwt.services.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_OFFICE_ADMIN')")
 @RequestMapping("/students")
 public class StudentController {
 

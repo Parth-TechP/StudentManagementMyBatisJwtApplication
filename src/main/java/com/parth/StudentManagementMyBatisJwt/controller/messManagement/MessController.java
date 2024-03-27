@@ -5,11 +5,13 @@ import com.parth.StudentManagementMyBatisJwt.dto.messManagement.MessDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.dto.messManagement.MessOwnersInfoDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.services.messManagement.MessService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAnyRole('ROLE_MESS_OWNER','ROLE_OFFICE_ADMIN')")
 @RequestMapping("/messes")
 public class MessController {
 

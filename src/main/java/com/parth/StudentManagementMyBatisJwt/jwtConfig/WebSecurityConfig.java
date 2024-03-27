@@ -32,12 +32,6 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity.csrf(csrf -> csrf.disable())
                 .authorizeRequests()
-                .requestMatchers("/students").hasAnyRole("STUDENT","OFFICE_ADMIN")
-                .requestMatchers("/teachers").hasAnyRole("TEACHER","OFFICE_ADMIN")
-                .requestMatchers("/subjects").hasAnyRole("STUDENT","TEACHER","OFFICE_ADMIN")
-                .requestMatchers("/messes").hasAnyRole("MESS_OWNER","OFFICE_ADMIN")
-                .requestMatchers("/mess-owners").hasAnyRole("MESS_OWNER","OFFICE_ADMIN")
-                .requestMatchers("/hostels").hasRole("OFFICE_ADMIN")
                 .anyRequest().authenticated().and()
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

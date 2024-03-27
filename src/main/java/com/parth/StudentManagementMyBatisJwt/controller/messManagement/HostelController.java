@@ -4,11 +4,13 @@ import com.parth.StudentManagementMyBatisJwt.dto.messManagement.HostelAdditionDt
 import com.parth.StudentManagementMyBatisJwt.dto.messManagement.HostelDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.services.messManagement.HostelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAnyRole('ROLE_MESS_OWNER','ROLE_OFFICE_ADMIN')")
 @RequestMapping("/hostels")
 public class HostelController {
 
