@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.parth.StudentManagementMyBatisJwt.repository")
+@MapperScan({"com.parth.StudentManagementMyBatisJwt.repository","com.parth.StudentManagementMyBatisJwt.repository.jwtUser"})
 public class StudentManagementMyBatisJwtApplication {
 
 	public static void main(String[] args) {
