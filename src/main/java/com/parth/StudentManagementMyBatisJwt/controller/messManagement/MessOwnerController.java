@@ -4,6 +4,7 @@ import com.parth.StudentManagementMyBatisJwt.dto.messManagement.MessOwnerAdditio
 import com.parth.StudentManagementMyBatisJwt.dto.messManagement.MessOwnerDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.dto.messManagement.MessOwnerResponseDto;
 import com.parth.StudentManagementMyBatisJwt.services.messManagement.MessOwnerService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RolesAllowed({"OFFICE_ADMIN"})
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/mess-owners")
 public class MessOwnerController {
 

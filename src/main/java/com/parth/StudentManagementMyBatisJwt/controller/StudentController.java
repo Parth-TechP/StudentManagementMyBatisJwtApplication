@@ -7,6 +7,7 @@ import com.parth.StudentManagementMyBatisJwt.dto.StudentSubjectsAdditionDto;
 import com.parth.StudentManagementMyBatisJwt.dto.StudentSubjectsDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.exceptions.ResourceNotFoundException;
 import com.parth.StudentManagementMyBatisJwt.services.StudentService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RolesAllowed({"STUDENT","OFFICE_ADMIN"})
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/students")
 public class StudentController {
 

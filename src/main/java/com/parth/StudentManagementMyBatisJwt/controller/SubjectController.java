@@ -4,6 +4,7 @@ import com.parth.StudentManagementMyBatisJwt.dto.SubjectAdditionDto;
 import com.parth.StudentManagementMyBatisJwt.dto.SubjectDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.dto.SubjectTeacherDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.services.SubjectService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RolesAllowed({"TEACHER","STUDENT","OFFICE_ADMIN"})
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/subjects")
 public class SubjectController {
 

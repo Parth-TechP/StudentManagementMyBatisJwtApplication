@@ -4,6 +4,7 @@ import com.parth.StudentManagementMyBatisJwt.dto.TeacherAdditionDto;
 import com.parth.StudentManagementMyBatisJwt.dto.TeacherDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.dto.TeacherSubjectsDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.services.TeacherService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@PreAuthorize("hasAnyRole('ROLE_TEACHER','ROLE_OFFICE_ADMIN')")
 @RolesAllowed({"TEACHER","OFFICE_ADMIN"})
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/teachers")
 public class TeacherController {
 
