@@ -4,6 +4,7 @@ import com.parth.StudentManagementMyBatisJwt.dto.messManagement.MessOwnerAdditio
 import com.parth.StudentManagementMyBatisJwt.dto.messManagement.MessOwnerDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.dto.messManagement.MessOwnerResponseDto;
 import com.parth.StudentManagementMyBatisJwt.services.messManagement.MessOwnerService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@PreAuthorize("hasRole('ROLE_OFFICE_ADMIN')")
+@RolesAllowed({"OFFICE_ADMIN"})
 @RequestMapping("/mess-owners")
 public class MessOwnerController {
 

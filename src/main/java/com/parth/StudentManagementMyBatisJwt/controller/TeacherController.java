@@ -4,6 +4,7 @@ import com.parth.StudentManagementMyBatisJwt.dto.TeacherAdditionDto;
 import com.parth.StudentManagementMyBatisJwt.dto.TeacherDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.dto.TeacherSubjectsDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.services.TeacherService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @PreAuthorize("hasAnyRole('ROLE_TEACHER','ROLE_OFFICE_ADMIN')")
+@RolesAllowed({"TEACHER","OFFICE_ADMIN"})
 @RequestMapping("/teachers")
 public class TeacherController {
 

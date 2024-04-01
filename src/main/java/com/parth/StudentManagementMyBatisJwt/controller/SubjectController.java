@@ -4,6 +4,7 @@ import com.parth.StudentManagementMyBatisJwt.dto.SubjectAdditionDto;
 import com.parth.StudentManagementMyBatisJwt.dto.SubjectDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.dto.SubjectTeacherDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.services.SubjectService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@PreAuthorize("hasAnyRole('ROLE_TEACHER','ROLE_STUDENT','ROLE_OFFICE_ADMIN')")
+@RolesAllowed({"TEACHER","STUDENT","OFFICE_ADMIN"})
 @RequestMapping("/subjects")
 public class SubjectController {
 
