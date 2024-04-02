@@ -4,16 +4,17 @@
 <configuration>
 
     <typeAliases>
-        <typeAlias type="com.parth.StudentManagementMyBatisJwt.model.messManagement.MessEntity" alias="MessEntity" />
-        <typeAlias type="com.parth.StudentManagementMyBatisJwt.model.messManagement.HostelEntity" alias="HostelEntity" />
-        <typeAlias type="com.parth.StudentManagementMyBatisJwt.model.messManagement.MessOwnerEntity" alias="MessOwnerEntity" />
+        <typeAlias type="com.parth.StudentManagementMyBatisJwt.model.messManagement.MessEntity" alias="MessEntity"/>
+        <typeAlias type="com.parth.StudentManagementMyBatisJwt.model.messManagement.HostelEntity" alias="HostelEntity"/>
+        <typeAlias type="com.parth.StudentManagementMyBatisJwt.model.messManagement.MessOwnerEntity"
+                   alias="MessOwnerEntity"/>
     </typeAliases>
 
 
     <mappers>
-        <mapper resource = "mess-management/mapper/MessMapper.xml" />
-        <mapper resource="mess-management/mapper/HostelMapper.xml" />
-        <mapper resource="mess-management/mapper/MessOwnerMapper.xml" />
+        <mapper resource="mess-management/mapper/MessMapper.xml"/>
+        <mapper resource="mess-management/mapper/HostelMapper.xml"/>
+        <mapper resource="mess-management/mapper/MessOwnerMapper.xml"/>
     </mappers>
 
 </configuration>

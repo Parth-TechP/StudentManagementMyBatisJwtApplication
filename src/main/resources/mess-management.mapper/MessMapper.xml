@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.parth.StudentManagementMyBatisJwt.repository.messManagement.MessRepository">
-    <resultMap id="MessResultMap" type="com.parth.StudentManagementMyBatisJwt.model.messManagement.MessEntity" >
-        <id property="id" column="id" />
-        <result property="name" column="name" />
-        <result property="messType" column="mess_type" />
-        <result property="location" column="location" />
+    <resultMap id="MessResultMap" type="com.parth.StudentManagementMyBatisJwt.model.messManagement.MessEntity">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="messType" column="mess_type"/>
+        <result property="location" column="location"/>
     </resultMap>
 
-    <select id="findAllMesses" resultMap="MessResultMap" >
+    <select id="findAllMesses" resultMap="MessResultMap">
         select * from mess;
     </select>
 
@@ -17,7 +17,8 @@
         select * from mess where id = #{id}
     </select>
 
-    <insert id="addMess" keyProperty="id" keyColumn="id" useGeneratedKeys="true" parameterType="com.parth.StudentManagementMyBatisJwt.model.messManagement.MessEntity" >
+    <insert id="addMess" keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+            parameterType="com.parth.StudentManagementMyBatisJwt.model.messManagement.MessEntity">
         insert into mess (name, mess_type, location) values (#{name}, #{messType}, #{location})
     </insert>
 </mapper>

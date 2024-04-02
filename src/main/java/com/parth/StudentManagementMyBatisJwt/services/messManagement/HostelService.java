@@ -13,19 +13,19 @@ import java.util.List;
 @Service
 public class HostelService {
 
-    @Autowired
-    HostelRepository hostelRepository;
+  @Autowired
+  HostelRepository hostelRepository;
 
-    @Autowired
-    HostelMapper hostelMapper;
+  @Autowired
+  HostelMapper hostelMapper;
 
-    public List<HostelDisplayDto> getAllHostel(){
-        return hostelMapper.convertListOfHostelEntityToHostelDisplayDto(hostelRepository.findAllHostels());
-    }
+  public List<HostelDisplayDto> getAllHostel() {
+    return hostelMapper.convertListOfHostelEntityToHostelDisplayDto(hostelRepository.findAllHostels());
+  }
 
-    public HostelDisplayDto addHostel(HostelAdditionDto hostelAdditionDto){
-        HostelEntity hostelEntity = hostelMapper.convertHostelAdditionDtoToHostelEntity(hostelAdditionDto);
-        hostelRepository.addHostel(hostelEntity);
-        return hostelMapper.convertHostelEntityToHostelDisplayDto(hostelEntity);
-    }
+  public HostelDisplayDto addHostel(HostelAdditionDto hostelAdditionDto) {
+    HostelEntity hostelEntity = hostelMapper.convertHostelAdditionDtoToHostelEntity(hostelAdditionDto);
+    hostelRepository.addHostel(hostelEntity);
+    return hostelMapper.convertHostelEntityToHostelDisplayDto(hostelEntity);
+  }
 }

@@ -25,30 +25,26 @@ import java.util.List;
 @RequestMapping("/teachers")
 public class TeacherController {
 
-    @Autowired
-    TeacherService teacherService;
+  @Autowired
+  TeacherService teacherService;
 
-    @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_OFFICE_ADMIN')")
-    public List<TeacherDisplayDto> getAllTeachers(){
-        return teacherService.getAllTeachers();
-    }
+  @GetMapping
+  @PreAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_OFFICE_ADMIN')")public List<TeacherDisplayDto> getAllTeachers() {
+    return teacherService.getAllTeachers();
+  }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("(hasRole('ROLE_TEACHER') and authentication.token.claims['RoleId'] == #id) or hasRole('ROLE_ROLE_OFFICE_ADMIN')")
-    public TeacherDisplayDto getTeacherById(@PathVariable(value = "id")Long id){
-        return teacherService.getTeacherById(id);
-    }
+  @GetMapping("/{id}")
+  @PreAuthorize("(hasRole('ROLE_TEACHER') and authentication.token.claims['RoleId'] == #id) or hasRole('ROLE_ROLE_OFFICE_ADMIN')")public TeacherDisplayDto getTeacherById(@PathVariable(value = "id") Long id) {
+    return teacherService.getTeacherById(id);
+  }
 
-    @GetMapping("/{id}/subjects")
-    @PreAuthorize("(hasRole('ROLE_TEACHER') and authentication.token.claims['RoleId'] == #id) or hasRole('ROLE_ROLE_OFFICE_ADMIN')")
-    public TeacherSubjectsDisplayDto findSubjectsByTeacherId(@PathVariable(value = "id")Long id){
-        return teacherService.findSubjectsByTeacherId(id);
-    }
+  @GetMapping("/{id}/subjects")
+  @PreAuthorize("(hasRole('ROLE_TEACHER') and authentication.token.claims['RoleId'] == #id) or hasRole('ROLE_ROLE_OFFICE_ADMIN')")public TeacherSubjectsDisplayDto findSubjectsByTeacherId(@PathVariable(value = "id") Long id) {
+    return teacherService.findSubjectsByTeacherId(id);
+  }
 
-    @PostMapping
-    @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")
-    public TeacherDisplayDto addTeacher(@Valid @RequestBody TeacherAdditionDto teacherAdditionDto){
-        return teacherService.addTeacher(teacherAdditionDto);
-    }
+  @PostMapping
+  @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")public TeacherDisplayDto addTeacher(@Valid @RequestBody TeacherAdditionDto teacherAdditionDto) {
+    return teacherService.addTeacher(teacherAdditionDto);
+  }
 }

@@ -1,6 +1,10 @@
 package com.parth.StudentManagementMyBatisJwt.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -11,10 +15,10 @@ import java.util.List;
 @AllArgsConstructor
 public class TeacherEntity {
 
-    private Long id;
-    private String name;
-    private int age;
-    private String email;
-    private String city;
-    private List<SubjectEntity> subjects;
+  private Long id;
+  private String name;
+  private int age;
+  private String email;
+  private String city;
+  private List<SubjectEntity> subjects;
 }

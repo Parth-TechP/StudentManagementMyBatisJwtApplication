@@ -19,62 +19,63 @@ import java.util.List;
 @Service
 public class StudentService {
 
-    @Autowired
-    StudentRepository studentRepository;
+  @Autowired
+  StudentRepository studentRepository;
 
-    @Autowired
-    StudentMapper studentMapper;
+  @Autowired
+  StudentMapper studentMapper;
 
-    @Autowired
-    SubjectRepository subjectRepository;
-    public List<StudentDisplayDto> getAllStudents(String name, Integer age, String city){
-        return studentMapper.convertListOfStudentEntityToStudentDisplayDto(studentRepository.findAllStudents(name, age, city));
-    }
+  @Autowired
+  SubjectRepository subjectRepository;
 
-    public StudentDisplayDto getStudentById(Long id){
-        StudentEntity student = studentRepository.findStudentById(id);
+  public List<StudentDisplayDto> getAllStudents(String name, Integer age, String city) {
+    return studentMapper.convertListOfStudentEntityToStudentDisplayDto(studentRepository.findAllStudents(name, age, city));
+  }
+
+  public StudentDisplayDto getStudentById(Long id) {
+    StudentEntity student = studentRepository.findStudentById(id);
         if (student != null){
             return studentMapper.convertStudentEntityToStudentDisplayDto(student);
         }
         else {
             throw new ResourceNotFoundException(id);
-        }
-    }
+  }}
 
-    public StudentSubjectsDisplayDto findSubjectsByStudentId(Long id){
-        StudentEntity student = studentRepository.findStudentById(id);
-        if (student != null){
-            return studentMapper.convertStudentEntityToStudentSubjectsDisplayDto(studentRepository.findSubjectsByStudentId(id));
-        }
-        else {
+  public StudentSubjectsDisplayDto findSubjectsByStudentId(Long id) {
+    StudentEntity student = studentRepository.findStudentById(id);
+        if (student != null){return studentMapper.convertStudentEntityToStudentSubjectsDisplayDto(studentRepository.findSubjectsByStudentId(id));
+  }else {
             throw new ResourceNotFoundException(id);
         }
     }
 
-    public StudentDisplayDto addStudent(StudentAdditionDto studentAdditionDto){
-        StudentEntity studentEntity = studentMapper.convertStudentAdditionDtoToStudentEntity(studentAdditionDto);
-        studentRepository.addStudent(studentEntity);
-        return studentMapper.convertStudentEntityToStudentDisplayDto(studentEntity);
-    }
+  public StudentDisplayDto addStudent(StudentAdditionDto studentAdditionDto) {
+    StudentEntity studentEntity = studentMapper.convertStudentAdditionDtoToStudentEntity(studentAdditionDto);
+    studentRepository.addStudent(studentEntity);
+    return studentMapper.convertStudentEntityToStudentDisplayDto(studentEntity);
+  }
 
-    public StudentSubjectsDisplayDto assignSubjectsToStudent(Long id, StudentSubjectsAdditionDto subjectsAdditionDto)throws ResourceNotFoundException {
-        List<SubjectEntity> subjectEntities = subjectRepository.findAllSubjects();
-        List<SubjectEntity> assignedSubjects = studentRepository.findSubjectsByStudentId(id).getSubjects();
-        if (subjectsAdditionDto != null) {
-            List<Long> subjectIds = subjectsAdditionDto.getSubjectIds();
-            for (Long subjectId : subjectIds) {
-                boolean existsInEntities = subjectEntities.stream().anyMatch(s -> s.getId().equals(subjectId));
-                boolean existsInAssigned = assignedSubjects.stream().anyMatch(s -> s.getId().equals(subjectId));
-                if (!existsInEntities) {
-                    throw new ResourceNotFoundException(subjectId);
-                }
-                if (existsInAssigned) {
-                    throw new DuplicateDataException(subjectId);
-                }
-            }
-            studentRepository.assignSubjectsToStudent(id, subjectIds);
+  public StudentSubjectsDisplayDto assignSubjectsToStudent(Long id, StudentSubjectsAdditionDto subjectsAdditionDto)
+    throws ResourceNotFoundException {
+    List<SubjectEntity> subjectEntities = subjectRepository.findAllSubjects();
+    List<SubjectEntity> assignedSubjects = studentRepository.findSubjectsByStudentId(id).getSubjects();
+    if (subjectsAdditionDto != null) {
+      List<Long> subjectIds = subjectsAdditionDto.getSubjectIds();
+
+        for (Long subjectId : subjectIds) {
+                boolean existsInEntities = subjectEntities.stream().anyMatch(s -> s.getId().equals(subjectId) );
+          boolean existsInAssigned = assignedSubjects.stream().anyMatch(s ->s.getId().equals(subjectId)) ;
+            if (!existsInEntities) {
+            throw new ResourceNotFoundException(subjectId);
         }
-        return studentMapper.convertStudentEntityToStudentSubjectsDisplayDto(studentRepository.findSubjectsByStudentId(id));
+        if (existsInAssigned) {
+          throw new DuplicateDataException(subjectId);
+        }
+      }
+
+      studentRepository.assignSubjectsToStudent(id, subjectIds);
     }
+    return studentMapper.convertStudentEntityToStudentSubjectsDisplayDto(studentRepository.findSubjectsByStudentId(id));
+  }
 
 }

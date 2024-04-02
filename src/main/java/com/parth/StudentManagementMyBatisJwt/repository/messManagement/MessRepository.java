@@ -7,9 +7,9 @@ import java.util.List;
 
 @MessManagementConnMapper
 public interface MessRepository {
-    List<MessEntity> findAllMesses();
+  List<MessEntity> findAllMesses();
 
-    MessEntity findMessById(Long id);
+  MessEntity findMessById(Long id);
 
-    void addMess(MessEntity messEntity);
+  void addMess(MessEntity messEntity);
 }

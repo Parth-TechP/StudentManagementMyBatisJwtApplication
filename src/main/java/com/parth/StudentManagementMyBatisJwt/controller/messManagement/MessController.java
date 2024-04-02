@@ -8,31 +8,34 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RolesAllowed({"ROLE_MESS_OWNER", "ROLE_OFFICE_ADMIN"})
 @RequestMapping("/messes")
 public class MessController {
 
-    @Autowired
-    MessService messService;
+  @Autowired
+  MessService messService;
 
-    @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ROLE_OFFICE_ADMIN', 'ROLE_ROLE_MESS_OWNER')")
-    public List<MessDisplayDto> findAllMesses(){return messService.getAllMesses();}
+  @GetMapping
+  @PreAuthorize("hasAnyRole('ROLE_ROLE_OFFICE_ADMIN', 'ROLE_ROLE_MESS_OWNER')") public List<MessDisplayDto> findAllMesses() {
+    return messService.getAllMesses();
+  }
 
-    @GetMapping("/{id}/owners")
-    @PreAuthorize("(hasRole('ROLE_ROLE_MESS_OWNER') and authentication.token.claims['RoleId'] == #id) or hasRole('ROLE_ROLE_OFFICE_ADMIN')")
-    public MessOwnersInfoDisplayDto findOwnersByMessID(@PathVariable(value = "id")Long id){
-        return messService.findOwnersByMessID(id);
-    }
+  @GetMapping("/{id}/owners")
+  @PreAuthorize("(hasRole('ROLE_ROLE_MESS_OWNER') and authentication.token.claims['RoleId'] == #id) or hasRole('ROLE_ROLE_OFFICE_ADMIN')")public MessOwnersInfoDisplayDto findOwnersByMessID(@PathVariable(value = "id") Long id) {
+    return messService.findOwnersByMessID(id);
+  }
 
-    @PostMapping
-    @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")
-    public MessDisplayDto addMess(@RequestBody MessAdditionDto messAdditionDto){
-        return messService.addMess(messAdditionDto);
-    }
+  @PostMapping
+  @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")public MessDisplayDto addMess(@RequestBody MessAdditionDto messAdditionDto) {
+    return messService.addMess(messAdditionDto);
+  }
 }

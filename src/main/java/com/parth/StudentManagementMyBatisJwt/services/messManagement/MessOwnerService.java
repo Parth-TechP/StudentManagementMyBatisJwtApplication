@@ -14,19 +14,19 @@ import java.util.List;
 @Service
 public class MessOwnerService {
 
-    @Autowired
-    MessOwnerRepository messOwnerRepository;
+  @Autowired
+  MessOwnerRepository messOwnerRepository;
 
-    @Autowired
-    MessOwnerMapper messOwnerMapper;
+  @Autowired
+  MessOwnerMapper messOwnerMapper;
 
-    public List<MessOwnerDisplayDto> getAllMessOwners(){
-        return messOwnerMapper.convertListOfMessEntityToMessOwnerDisplayDto(messOwnerRepository.findAllMessOwners());
-    }
+  public List<MessOwnerDisplayDto> getAllMessOwners() {
+    return messOwnerMapper.convertListOfMessEntityToMessOwnerDisplayDto(messOwnerRepository.findAllMessOwners());
+  }
 
-    public MessOwnerResponseDto addMessOwner(MessOwnerAdditionDto messOwnerAdditionDto){
-        MessOwnerEntity messOwnerEntity = messOwnerMapper.convertMessOwnerAdditionDtoToMessOwnerEntity(messOwnerAdditionDto);
-        messOwnerRepository.addMessOwner(messOwnerEntity);
-        return messOwnerMapper.convertMessOwnerEntityToMessOwnerResponseDto(messOwnerEntity);
-    }
+  public MessOwnerResponseDto addMessOwner(MessOwnerAdditionDto messOwnerAdditionDto) {
+    MessOwnerEntity messOwnerEntity = messOwnerMapper.convertMessOwnerAdditionDtoToMessOwnerEntity(messOwnerAdditionDto);
+    messOwnerRepository.addMessOwner(messOwnerEntity);
+    return messOwnerMapper.convertMessOwnerEntityToMessOwnerResponseDto(messOwnerEntity);
+  }
 }

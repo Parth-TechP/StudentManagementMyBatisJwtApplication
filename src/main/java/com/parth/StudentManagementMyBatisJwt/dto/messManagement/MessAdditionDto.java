@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class MessAdditionDto {
-    private String name;
-    private String messType;
-    private String location;
+  private String name;
+  private String messType;
+  private String location;
 }
