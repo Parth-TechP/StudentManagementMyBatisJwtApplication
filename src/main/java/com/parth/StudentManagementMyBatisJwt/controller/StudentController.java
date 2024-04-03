@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RolesAllowed({"STUDENT","OFFICE_ADMIN"})
+@RolesAllowed({"ROLE_STUDENT", "ROLE_OFFICE_ADMIN"})
 @SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/students")
 public class StudentController {

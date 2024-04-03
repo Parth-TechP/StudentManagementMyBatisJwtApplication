@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RolesAllowed({"OFFICE_ADMIN"})
+@RolesAllowed({"ROLE_OFFICE_ADMIN"})
 @SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/mess-owners")
 public class MessOwnerController {
