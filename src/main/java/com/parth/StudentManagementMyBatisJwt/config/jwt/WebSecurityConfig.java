@@ -23,39 +23,43 @@ import javax.crypto.spec.SecretKeySpec;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(jsr250Enabled = true)
-public class WebSecurityConfig{
+public class WebSecurityConfig {
 
     @Value("${jwt.secret}")
     private String secret;
-  @Bean
-  public JwtDecoder jwtDecoder() {
-    byte[] keyBytes = secret.getBytes();
-    SecretKey key = new SecretKeySpec(keyBytes, 0, keyBytes.length, "HmacSHA512");
-    NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withSecretKey(key).macAlgorithm(MacAlgorithm.HS512).build();
-    OAuth2TokenValidator<Jwt> defaultValidators = JwtValidators.createDefault();
-    jwtDecoder.setJwtValidator(defaultValidators);
-    return jwtDecoder;
-  }
 
-  @Bean
-  public JwtAuthenticationConverter jwtAuthenticationConverter() {
-    JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-    grantedAuthoritiesConverter.setAuthoritiesClaimName("Roles");
-    grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
-    JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-    jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
-    return jwtAuthenticationConverter;
-  }
+    private static final String[] AUTH_URL_WHITE_LIST = {
+            "/swagger-ui/**",
+            "/v3/api-docs/**"
+    };
+    @Bean
+    public JwtDecoder jwtDecoder() {
+        byte[] keyBytes = secret.getBytes();
+        SecretKey key = new SecretKeySpec(keyBytes, 0, keyBytes.length, "HmacSHA512");
+        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withSecretKey(key).macAlgorithm(MacAlgorithm.HS512).build();
+        OAuth2TokenValidator<Jwt> defaultValidators = JwtValidators.createDefault();
+        jwtDecoder.setJwtValidator(defaultValidators);
+        return jwtDecoder;
+    }
+
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        grantedAuthoritiesConverter.setAuthoritiesClaimName("Roles");
+        grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+        return jwtAuthenticationConverter;
+    }
 
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-    return httpSecurity.authorizeHttpRequests(authorize -> authorize
-        .requestMatchers("/swagger-ui/**").permitAll()
-        .requestMatchers("/v3/api-docs/**").permitAll()
-        .anyRequest().authenticated())
-      .oauth2ResourceServer(configure -> configure.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
-      .httpBasic(Customizer.withDefaults())
-      .build();
-  }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity.authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(AUTH_URL_WHITE_LIST).permitAll()
+                        .anyRequest().authenticated())
+                .oauth2ResourceServer(configure -> configure.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
+                .httpBasic(Customizer.withDefaults())
+                .build();
+    }
 }
