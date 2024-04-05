@@ -7,13 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan({"com.parth.StudentManagementMyBatisJwt.repository","com.parth.StudentManagementMyBatisJwt.repository.jwtUser"})
-@SecurityScheme(
-		name = "bearerAuth",
-		scheme = "bearer",
-		bearerFormat = "JWT",
-		type = SecuritySchemeType.HTTP
-)
+@MapperScan("com.parth.StudentManagementMyBatisJwt.repository")
 public class StudentManagementMyBatisJwtApplication {
 
 	public static void main(String[] args) {
