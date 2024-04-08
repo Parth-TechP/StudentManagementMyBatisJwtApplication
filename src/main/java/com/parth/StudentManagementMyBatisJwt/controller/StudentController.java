@@ -1,10 +1,8 @@
 package com.parth.StudentManagementMyBatisJwt.controller;
 
 
-import com.parth.StudentManagementMyBatisJwt.dto.StudentAdditionDto;
-import com.parth.StudentManagementMyBatisJwt.dto.StudentDisplayDto;
-import com.parth.StudentManagementMyBatisJwt.dto.StudentSubjectsAdditionDto;
-import com.parth.StudentManagementMyBatisJwt.dto.StudentSubjectsDisplayDto;
+import com.parth.StudentManagementMyBatisJwt.dto.*;
+import com.parth.StudentManagementMyBatisJwt.exceptions.DuplicateDataException;
 import com.parth.StudentManagementMyBatisJwt.exceptions.ResourceNotFoundException;
 import com.parth.StudentManagementMyBatisJwt.services.StudentService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -12,6 +10,7 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,7 +55,7 @@ public class StudentController {
   @PostMapping("/{id}/subjects")
   @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')") public StudentSubjectsDisplayDto assignSubjectsToStudent(@Valid @PathVariable(value = "id") Long id,
                                                                                                              @RequestBody StudentSubjectsAdditionDto subjectsAdditionDto)
-    throws ResourceNotFoundException {
+    throws Exception {
     return studentService.assignSubjectsToStudent(id, subjectsAdditionDto);
   }
 }

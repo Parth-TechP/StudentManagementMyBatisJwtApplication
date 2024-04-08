@@ -2,6 +2,8 @@ package com.parth.StudentManagementMyBatisJwt.repository;
 
 import com.parth.StudentManagementMyBatisJwt.config.MyBatisDBConnMapper;
 import com.parth.StudentManagementMyBatisJwt.model.SubjectEntity;
+import jakarta.validation.constraints.NotBlank;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,4 +16,5 @@ public interface SubjectRepository {
   SubjectEntity displaySubjectById(Long id);
 
   boolean addSubject(SubjectEntity subject);
+    Long getSubjectIdBySubjectName(@Param("subjectName") String names);
 }

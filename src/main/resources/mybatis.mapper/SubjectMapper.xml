@@ -32,6 +32,10 @@
         s.id = #{id}
     </select>
 
+    <select id="getSubjectIdBySubjectName" parameterType="String" resultType="java.lang.Long" >
+            select id from subject where name = #{subjectName}
+    </select>
+
     <insert id="addSubject" parameterType="com.parth.StudentManagementMyBatisJwt.model.SubjectEntity"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into subject (name, credits, teacher_id) values (#{name}, #{credits}, #{teacher.id})

@@ -12,6 +12,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.sql.DataSource;
 
@@ -19,6 +22,7 @@ import javax.sql.DataSource;
   "BatisDBSessionFactory")
 
 @Configuration
+@EnableTransactionManagement
 public class MyBatisDataSourceConfig {
   @Bean(name = "dataSource1")
   @Primary
@@ -52,4 +56,7 @@ public class MyBatisDataSourceConfig {
   public DataSourceProperties firstDataSourceProperties() {
     return new DataSourceProperties();
   }
+
+    @Bean(name = "MyBatisSchoolTransactionManager")
+    public DataSourceTransactionManager MyBatisSchoolTransactionManager(){return new DataSourceTransactionManager(myBatisDataSource());}
 }
