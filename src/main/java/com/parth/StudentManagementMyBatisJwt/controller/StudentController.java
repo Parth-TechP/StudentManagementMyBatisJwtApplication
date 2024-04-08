@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RolesAllowed({"ROLE_STUDENT", "ROLE_OFFICE_ADMIN"})
-@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/students")
 public class StudentController {
 

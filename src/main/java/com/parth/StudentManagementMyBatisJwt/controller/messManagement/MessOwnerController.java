@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RolesAllowed({"ROLE_OFFICE_ADMIN"})
-@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/mess-owners")
 public class MessOwnerController {
 

@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RolesAllowed({"ROLE_TEACHER", "ROLE_STUDENT", "ROLE_OFFICE_ADMIN"})
-@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/subjects")
 public class SubjectController {
 
