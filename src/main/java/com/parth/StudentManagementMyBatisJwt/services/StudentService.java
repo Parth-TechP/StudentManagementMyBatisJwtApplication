@@ -83,7 +83,7 @@ public class StudentService {
   }
 
     @Transactional(transactionManager = "MyBatisSchoolTransactionManager", rollbackFor = DataFormatException.class)
-    public List<StudentSubjectsDisplayDto> assignSubjectsToAllStudents(SubjectAssignmentDto subjectAssignmentDto) throws Exception {
+    public List<StudentSubjectsDisplayDto> assignSubjectsToAllStudents(SubjectAssignmentDto subjectAssignmentDto) {
         List<Long> subjectIds = new ArrayList<>();
         for (String name: subjectAssignmentDto.getSubjects()){
             subjectIds.add(subjectRepository.getSubjectIdBySubjectName(name));

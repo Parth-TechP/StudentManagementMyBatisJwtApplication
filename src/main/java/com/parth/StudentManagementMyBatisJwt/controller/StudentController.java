@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RolesAllowed({"ROLE_STUDENT", "ROLE_OFFICE_ADMIN"})
 @RequestMapping("/students")
 public class StudentController {
 
