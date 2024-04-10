@@ -32,20 +32,12 @@ public class StudentService {
         return studentMapper.convertListOfStudentEntityToStudentDisplayDto(studentRepository.findAllStudents(name, age, city));
     }
 
-    public StudentDisplayDto getStudentById(Long id, Jwt jwt){
-        Long roleId = (Long) jwt.getClaims().get("RoleId");
-        if (id.equals(roleId))
-            return studentMapper.convertStudentEntityToStudentDisplayDto(studentRepository.findStudentById(id));
-        else
-            throw new UnauthorizedAccessException();
+    public StudentDisplayDto getStudentById(Long id){
+        return studentMapper.convertStudentEntityToStudentDisplayDto(studentRepository.findStudentById(id));
     }
 
-    public StudentSubjectsDisplayDto findSubjectsByStudentId(Long id, Jwt jwt){
-        Long roleId = (Long) jwt.getClaims().get("RoleId");
-        if (id.equals(roleId))
-            return studentMapper.convertStudentEntityToStudentSubjectsDisplayDto(studentRepository.findSubjectsByStudentId(id));
-        else
-            throw new UnauthorizedAccessException();
+    public StudentSubjectsDisplayDto findSubjectsByStudentId(Long id){
+        return studentMapper.convertStudentEntityToStudentSubjectsDisplayDto(studentRepository.findSubjectsByStudentId(id));
     }
 
     public StudentDisplayDto addStudent(StudentAdditionDto studentAdditionDto){

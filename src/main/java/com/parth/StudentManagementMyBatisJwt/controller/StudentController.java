@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RolesAllowed({"ROLE_STUDENT", "ROLE_OFFICE_ADMIN"})
 @RequestMapping("/students")
 public class StudentController {
 
@@ -27,6 +26,7 @@ public class StudentController {
     StudentService studentService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ROLE_STUDENT','ROLE_ROLE_OFFICE_ADMIN')")
     public List<StudentDisplayDto> getAllStudents(@RequestParam(name = "name",required = false)String name,
                                                   @RequestParam(name = "age",required = false)Integer age,
                                                   @RequestParam(name = "city",required = false)String city){
@@ -34,21 +34,25 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public StudentDisplayDto getStudentById(@PathVariable(value = "id")Long id, @AuthenticationPrincipal Jwt jwt){
-        return studentService.getStudentById(id, jwt);
+    @PreAuthorize("hasAnyRole('ROLE_ROLE_STUDENT','ROLE_ROLE_OFFICE_ADMIN') and authentication.token.claims['RoleId'] == #id")
+    public StudentDisplayDto getStudentById(@PathVariable(value = "id") Long id){
+        return studentService.getStudentById(id);
     }
 
     @GetMapping("/{id}/subjects")
-    public StudentSubjectsDisplayDto findSubjectsByStudentId(@PathVariable(value = "id")Long id,  @AuthenticationPrincipal Jwt jwt){
-        return studentService.findSubjectsByStudentId(id, jwt);
+    @PreAuthorize("hasAnyRole('ROLE_ROLE_STUDENT','ROLE_ROLE_OFFICE_ADMIN') and authentication.token.claims['RoleId'] == #id")
+    public StudentSubjectsDisplayDto findSubjectsByStudentId(@PathVariable(value = "id")Long id){
+        return studentService.findSubjectsByStudentId(id);
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")
     public StudentDisplayDto addStudent(@Valid @RequestBody StudentAdditionDto studentAdditionDto){
         return studentService.addStudent(studentAdditionDto);
     }
 
     @PostMapping("/{id}/subjects")
+    @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")
     public StudentSubjectsDisplayDto assignSubjectsToStudent(@Valid@PathVariable(value = "id")Long id, @RequestBody StudentSubjectsAdditionDto subjectsAdditionDto) throws ResourceNotFoundException {
         return studentService.assignSubjectsToStudent(id, subjectsAdditionDto);
     }

@@ -26,20 +26,12 @@ public class TeacherService {
         return teacherMapper.convertListOfTeacherEntityToTeacherDisplayDto(teacherRepository.findAllTeachers());
     }
 
-    public TeacherDisplayDto getTeacherById(Long id, Jwt jwt){
-        Long roleId = (Long) jwt.getClaims().get("RoleId");
-        if (id.equals(roleId))
-            return teacherMapper.convertTeacherEntityToTeacherDisplayDto(teacherRepository.findSubjectsByTeacherId(id));
-        else
-            throw new UnauthorizedAccessException();
+    public TeacherDisplayDto getTeacherById(Long id){
+        return teacherMapper.convertTeacherEntityToTeacherDisplayDto(teacherRepository.findSubjectsByTeacherId(id));
     }
 
-    public TeacherSubjectsDisplayDto findSubjectsByTeacherId(Long id, Jwt jwt){
-        Long roleId = (Long) jwt.getClaims().get("RoleId");
-        if (id.equals(roleId))
-            return teacherMapper.convertTeacherEntityToTeacherSubjectsDisplayDto(teacherRepository.findSubjectsByTeacherId(id));
-        else
-            throw new UnauthorizedAccessException();
+    public TeacherSubjectsDisplayDto findSubjectsByTeacherId(Long id){
+        return teacherMapper.convertTeacherEntityToTeacherSubjectsDisplayDto(teacherRepository.findSubjectsByTeacherId(id));
     }
 
     public TeacherDisplayDto addTeacher(TeacherAdditionDto teacherAdditionDto){

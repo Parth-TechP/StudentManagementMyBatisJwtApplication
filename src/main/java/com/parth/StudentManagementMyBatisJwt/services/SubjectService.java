@@ -26,12 +26,8 @@ public class SubjectService {
         return subjectMapper.convertListOfSubjectEntityToSubjectDisplayDto(subjectRepository.findAllSubjects());
     }
 
-    public SubjectTeacherDisplayDto getSubjectById(Long id, Jwt jwt){
-        Long roleId = (Long) jwt.getClaims().get("RoleId");
-        if (id.equals(roleId))
-            return subjectMapper.convertSubjectEntityToSubjectTeacherDisplayDto(subjectRepository.findSubjectById(id));
-        else
-            throw new UnauthorizedAccessException();
+    public SubjectTeacherDisplayDto getSubjectById(Long id){
+        return subjectMapper.convertSubjectEntityToSubjectTeacherDisplayDto(subjectRepository.findSubjectById(id));
     }
 
     public SubjectDisplayDto addSubject(SubjectAdditionDto subjectAdditionDto){

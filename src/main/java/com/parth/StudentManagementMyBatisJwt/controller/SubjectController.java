@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RolesAllowed({"ROLE_TEACHER", "ROLE_STUDENT", "ROLE_OFFICE_ADMIN"})
 @RequestMapping("/subjects")
 public class SubjectController {
 
@@ -24,16 +23,19 @@ public class SubjectController {
     SubjectService subjectService;
 
     @GetMapping
+    @PreAuthorize("hadAnyRole('ROLE_ROLE_TEACHER', 'ROLE_ROLE_STUDENT', 'ROLE_ROLE_OFFICE_ADMIN')")
     public List<SubjectDisplayDto> getAllSubjects(){
         return subjectService.getAllSubjects();
     }
 
     @GetMapping("/{id}")
-    public SubjectTeacherDisplayDto getSubjectById(@PathVariable(value = "id")Long id, @AuthenticationPrincipal Jwt jwt){
-        return subjectService.getSubjectById(id, jwt);
+    @PreAuthorize("hadAnyRole('ROLE_ROLE_TEACHER', 'ROLE_ROLE_STUDENT', 'ROLE_ROLE_OFFICE_ADMIN') and authentication.token.claims['RoleId'] == #id")
+    public SubjectTeacherDisplayDto getSubjectById(@PathVariable(value = "id")Long id){
+        return subjectService.getSubjectById(id);
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")
     public SubjectDisplayDto addSubject(@Valid @RequestBody SubjectAdditionDto subjectAdditionDto){
         return subjectService.addSubject(subjectAdditionDto);
     }

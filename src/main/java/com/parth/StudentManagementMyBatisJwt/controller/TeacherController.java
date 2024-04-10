@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RolesAllowed({"ROLE_TEACHER", "ROLE_OFFICE_ADMIN"})
 @RequestMapping("/teachers")
 public class TeacherController {
 
@@ -30,21 +29,25 @@ public class TeacherController {
     TeacherService teacherService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_OFFICE_ADMIN')")
     public List<TeacherDisplayDto> getAllTeachers(){
         return teacherService.getAllTeachers();
     }
 
     @GetMapping("/{id}")
-    public TeacherDisplayDto getTeacherById(@PathVariable(value = "id")Long id, @AuthenticationPrincipal Jwt jwt){
-        return teacherService.getTeacherById(id, jwt);
+    @PreAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_OFFICE_ADMIN') and authentication.token.claims['RoleId'] == #id")
+    public TeacherDisplayDto getTeacherById(@PathVariable(value = "id")Long id){
+        return teacherService.getTeacherById(id);
     }
 
     @GetMapping("/{id}/subjects")
-    public TeacherSubjectsDisplayDto findSubjectsByTeacherId(@PathVariable(value = "id")Long id, @AuthenticationPrincipal Jwt jwt){
-        return teacherService.findSubjectsByTeacherId(id, jwt);
+    @PreAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_OFFICE_ADMIN') and authentication.token.claims['RoleId'] == #id")
+    public TeacherSubjectsDisplayDto findSubjectsByTeacherId(@PathVariable(value = "id")Long id){
+        return teacherService.findSubjectsByTeacherId(id);
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")
     public TeacherDisplayDto addTeacher(@Valid @RequestBody TeacherAdditionDto teacherAdditionDto){
         return teacherService.addTeacher(teacherAdditionDto);
     }
