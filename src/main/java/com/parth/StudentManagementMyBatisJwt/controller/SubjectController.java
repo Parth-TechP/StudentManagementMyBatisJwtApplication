@@ -9,6 +9,8 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +29,8 @@ public class SubjectController {
     }
 
     @GetMapping("/{id}")
-    public SubjectTeacherDisplayDto getSubjectById(@PathVariable(value = "id")Long id){
-        return subjectService.getSubjectById(id);
+    public SubjectTeacherDisplayDto getSubjectById(@PathVariable(value = "id")Long id, @AuthenticationPrincipal Jwt jwt){
+        return subjectService.getSubjectById(id, jwt);
     }
 
     @PostMapping

@@ -12,6 +12,8 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,18 +34,18 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public StudentDisplayDto getStudentById(@PathVariable(value = "id")Long id){
-        return studentService.getStudentById(id);
+    public StudentDisplayDto getStudentById(@PathVariable(value = "id")Long id, @AuthenticationPrincipal Jwt jwt){
+        return studentService.getStudentById(id, jwt);
     }
 
     @GetMapping("/{id}/subjects")
-    public StudentSubjectsDisplayDto findSubjectsByStudentId(@PathVariable(value = "id")Long id){
-        return studentService.findSubjectsByStudentId(id);
+    public StudentSubjectsDisplayDto findSubjectsByStudentId(@PathVariable(value = "id")Long id,  @AuthenticationPrincipal Jwt jwt){
+        return studentService.findSubjectsByStudentId(id, jwt);
     }
 
     @PostMapping
     public StudentDisplayDto addStudent(@Valid @RequestBody StudentAdditionDto studentAdditionDto){
-         return studentService.addStudent(studentAdditionDto);
+        return studentService.addStudent(studentAdditionDto);
     }
 
     @PostMapping("/{id}/subjects")

@@ -9,6 +9,9 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,13 +35,13 @@ public class TeacherController {
     }
 
     @GetMapping("/{id}")
-    public TeacherDisplayDto getTeacherById(@PathVariable(value = "id")Long id){
-        return teacherService.getTeacherById(id);
+    public TeacherDisplayDto getTeacherById(@PathVariable(value = "id")Long id, @AuthenticationPrincipal Jwt jwt){
+        return teacherService.getTeacherById(id, jwt);
     }
 
     @GetMapping("/{id}/subjects")
-    public TeacherSubjectsDisplayDto findSubjectsByTeacherId(@PathVariable(value = "id")Long id){
-        return teacherService.findSubjectsByTeacherId(id);
+    public TeacherSubjectsDisplayDto findSubjectsByTeacherId(@PathVariable(value = "id")Long id, @AuthenticationPrincipal Jwt jwt){
+        return teacherService.findSubjectsByTeacherId(id, jwt);
     }
 
     @PostMapping
