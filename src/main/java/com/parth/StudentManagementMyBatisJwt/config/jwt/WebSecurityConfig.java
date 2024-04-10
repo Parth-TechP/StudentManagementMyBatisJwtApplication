@@ -1,5 +1,6 @@
 package com.parth.StudentManagementMyBatisJwt.config.jwt;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,9 @@ public class WebSecurityConfig {
 
     @Value("${jwt.secret}")
     private String secret;
+
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
 
     private static final String[] AUTH_URL_WHITE_LIST = {
             "/swagger-ui/**",
@@ -59,6 +63,7 @@ public class WebSecurityConfig {
                         .requestMatchers(AUTH_URL_WHITE_LIST).permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(configure -> configure.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
+                .exceptionHandling(ex -> ex.accessDeniedHandler(customAccessDeniedHandler))
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
