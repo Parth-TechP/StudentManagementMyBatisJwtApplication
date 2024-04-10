@@ -32,6 +32,8 @@ public class WebSecurityConfig {
     @Autowired
     private CustomAccessDeniedHandler customAccessDeniedHandler;
 
+    @Autowired JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
     private static final String[] AUTH_URL_WHITE_LIST = {
             "/swagger-ui/**",
             "/v3/api-docs/**"
@@ -62,7 +64,7 @@ public class WebSecurityConfig {
         return httpSecurity.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_URL_WHITE_LIST).permitAll()
                         .anyRequest().authenticated())
-                .oauth2ResourceServer(configure -> configure.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
+                .oauth2ResourceServer(configure -> configure.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())).authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .exceptionHandling(ex -> ex.accessDeniedHandler(customAccessDeniedHandler))
                 .httpBasic(Customizer.withDefaults())
                 .build();
