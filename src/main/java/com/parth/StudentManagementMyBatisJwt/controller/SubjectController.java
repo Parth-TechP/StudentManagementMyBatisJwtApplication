@@ -29,7 +29,7 @@ public class SubjectController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hadAnyRole('ROLE_ROLE_TEACHER', 'ROLE_ROLE_STUDENT', 'ROLE_ROLE_OFFICE_ADMIN') and authentication.token.claims['RoleId'] == #id")
+    @PreAuthorize("hadAnyRole('ROLE_ROLE_TEACHER', 'ROLE_ROLE_STUDENT', 'ROLE_ROLE_OFFICE_ADMIN')")
     public SubjectTeacherDisplayDto getSubjectById(@PathVariable(value = "id")Long id){
         return subjectService.getSubjectById(id);
     }

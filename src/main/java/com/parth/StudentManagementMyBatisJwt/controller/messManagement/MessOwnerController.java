@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RolesAllowed({"ROLE_OFFICE_ADMIN"})
 @RequestMapping("/mess-owners")
 public class MessOwnerController {
 
@@ -21,9 +20,11 @@ public class MessOwnerController {
     MessOwnerService messOwnerService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")
     public List<MessOwnerDisplayDto> findAllMessOwners(){return messOwnerService.getAllMessOwners();}
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")
     public MessOwnerResponseDto addMessOwners(@RequestBody MessOwnerAdditionDto messOwnerAdditionDto){
         return messOwnerService.addMessOwner(messOwnerAdditionDto);
     }

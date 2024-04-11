@@ -21,14 +21,17 @@ public class MessController {
     MessService messService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ROLE_OFFICE_ADMIN', 'ROLE_ROLE_MESS_OWNER')")
     public List<MessDisplayDto> findAllMesses(){return messService.getAllMesses();}
 
     @GetMapping("/{id}/owners")
+    @PreAuthorize("(hasRole('ROLE_ROLE_MESS_OWNER') and authentication.token.claims['RoleId'] == #id) or hasRole('ROLE_ROLE_OFFICE_ADMIN')")
     public MessOwnersInfoDisplayDto findOwnersByMessID(@PathVariable(value = "id")Long id){
         return messService.findOwnersByMessID(id);
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")
     public MessDisplayDto addMess(@RequestBody MessAdditionDto messAdditionDto){
         return messService.addMess(messAdditionDto);
     }

@@ -35,13 +35,13 @@ public class TeacherController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_OFFICE_ADMIN') and authentication.token.claims['RoleId'] == #id")
+    @PreAuthorize("(hasRole('ROLE_TEACHER') and authentication.token.claims['RoleId'] == #id) or hasRole('ROLE_ROLE_OFFICE_ADMIN')")
     public TeacherDisplayDto getTeacherById(@PathVariable(value = "id")Long id){
         return teacherService.getTeacherById(id);
     }
 
     @GetMapping("/{id}/subjects")
-    @PreAuthorize("hasAnyRole('ROLE_TEACHER', 'ROLE_OFFICE_ADMIN') and authentication.token.claims['RoleId'] == #id")
+    @PreAuthorize("(hasRole('ROLE_TEACHER') and authentication.token.claims['RoleId'] == #id) or hasRole('ROLE_ROLE_OFFICE_ADMIN')")
     public TeacherSubjectsDisplayDto findSubjectsByTeacherId(@PathVariable(value = "id")Long id){
         return teacherService.findSubjectsByTeacherId(id);
     }

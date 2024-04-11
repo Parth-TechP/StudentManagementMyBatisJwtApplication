@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RolesAllowed({"ROLE_MESS_OWNER", "ROLE_OFFICE_ADMIN"})
 @RequestMapping("/hostels")
 public class HostelController {
 
@@ -24,9 +23,11 @@ public class HostelController {
     HostelService hostelService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ROLE_OFFICE_ADMIN', 'ROLE_ROLE_MESS_OWNER')")
     public List<HostelDisplayDto> findAllHostels(){return hostelService.getAllHostel();}
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")
     public HostelDisplayDto addHostel(@RequestBody HostelAdditionDto hostelAdditionDto){
         return hostelService.addHostel(hostelAdditionDto);
     }

@@ -34,13 +34,13 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_ROLE_STUDENT','ROLE_ROLE_OFFICE_ADMIN') and authentication.token.claims['RoleId'] == #id")
+    @PreAuthorize("(hasRole('ROLE_ROLE_STUDENT') and authentication.token.claims['RoleId'] == #id) or hasRole('ROLE_ROLE_OFFICE_ADMIN')")
     public StudentDisplayDto getStudentById(@PathVariable(value = "id") Long id){
         return studentService.getStudentById(id);
     }
 
     @GetMapping("/{id}/subjects")
-    @PreAuthorize("hasAnyRole('ROLE_ROLE_STUDENT','ROLE_ROLE_OFFICE_ADMIN') and authentication.token.claims['RoleId'] == #id")
+    @PreAuthorize("(hasRole('ROLE_ROLE_STUDENT') and authentication.token.claims['RoleId'] == #id) or hasRole('ROLE_ROLE_OFFICE_ADMIN')")
     public StudentSubjectsDisplayDto findSubjectsByStudentId(@PathVariable(value = "id")Long id){
         return studentService.findSubjectsByStudentId(id);
     }
