@@ -4,27 +4,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<?> studentNotFoundException(ResourceNotFoundException ex, WebRequest request){
-        ErrorDetails errorDetails=new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorDetails studentNotFoundException(ResourceNotFoundException ex, WebRequest request){
+        return new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
     }
 
     @ExceptionHandler(DuplicateDataException.class)
-    public ResponseEntity<?> duplicateDataException(DuplicateDataException ex, WebRequest request){
-        ErrorDetails errorDetails=new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorDetails duplicateDataException(DuplicateDataException ex, WebRequest request){
+        return new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
     }
 
     @ExceptionHandler(UnauthorizedAccessException.class)
-    public ResponseEntity<?> unauthorizedAccessException(UnauthorizedAccessException ex, WebRequest request){
-        ErrorDetails errorDetails=new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorDetails unauthorizedAccessException(UnauthorizedAccessException ex, WebRequest request){
+        return new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
     }
 }
