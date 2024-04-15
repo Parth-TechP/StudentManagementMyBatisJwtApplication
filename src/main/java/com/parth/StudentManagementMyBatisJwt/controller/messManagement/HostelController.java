@@ -19,16 +19,16 @@ import java.util.List;
 @RequestMapping("/hostels")
 public class HostelController {
 
-    @Autowired
-    HostelService hostelService;
+  @Autowired
+  HostelService hostelService;
 
-    @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ROLE_OFFICE_ADMIN', 'ROLE_ROLE_MESS_OWNER')")
-    public List<HostelDisplayDto> findAllHostels(){return hostelService.getAllHostel();}
+  @GetMapping
+  @PreAuthorize("hasAnyRole('ROLE_ROLE_OFFICE_ADMIN', 'ROLE_ROLE_MESS_OWNER')")public List<HostelDisplayDto> findAllHostels() {
+    return hostelService.getAllHostel();
+  }
 
-    @PostMapping
-    @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")
-    public HostelDisplayDto addHostel(@RequestBody HostelAdditionDto hostelAdditionDto){
-        return hostelService.addHostel(hostelAdditionDto);
-    }
+  @PostMapping
+  @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")public HostelDisplayDto addHostel(@RequestBody HostelAdditionDto hostelAdditionDto) {
+    return hostelService.addHostel(hostelAdditionDto);
+  }
 }

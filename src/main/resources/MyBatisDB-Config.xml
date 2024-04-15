@@ -2,18 +2,18 @@
 
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    
+
     <typeAliases>
-        <typeAlias type="com.parth.StudentManagementMyBatisJwt.model.StudentEntity" alias="StudentEntity" />
-        <typeAlias type="com.parth.StudentManagementMyBatisJwt.model.SubjectEntity" alias="SubjectEntity" />
-        <typeAlias type="com.parth.StudentManagementMyBatisJwt.model.TeacherEntity" alias="TeacherEntity" />
+        <typeAlias type="com.parth.StudentManagementMyBatisJwt.model.StudentEntity" alias="StudentEntity"/>
+        <typeAlias type="com.parth.StudentManagementMyBatisJwt.model.SubjectEntity" alias="SubjectEntity"/>
+        <typeAlias type="com.parth.StudentManagementMyBatisJwt.model.TeacherEntity" alias="TeacherEntity"/>
     </typeAliases>
 
 
     <mappers>
-        <mapper resource = "mybatis/mapper/StudentMapper.xml" />
-        <mapper resource = "mybatis/mapper/SubjectMapper.xml" />
-        <mapper resource = "mybatis/mapper/TeacherMapper.xml" />
+        <mapper resource="mybatis/mapper/StudentMapper.xml"/>
+        <mapper resource="mybatis/mapper/SubjectMapper.xml"/>
+        <mapper resource="mybatis/mapper/TeacherMapper.xml"/>
     </mappers>
 
 </configuration>

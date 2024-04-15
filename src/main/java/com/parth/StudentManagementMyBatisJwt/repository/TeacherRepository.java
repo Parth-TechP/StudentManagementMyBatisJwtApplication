@@ -4,11 +4,14 @@ import com.parth.StudentManagementMyBatisJwt.config.MyBatisDBConnMapper;
 import com.parth.StudentManagementMyBatisJwt.model.TeacherEntity;
 
 import java.util.List;
+
 @MyBatisDBConnMapper
 public interface TeacherRepository {
-    List<TeacherEntity> findAllTeachers();
-    TeacherEntity findTeacherById(Long id);
-    TeacherEntity findSubjectsByTeacherId(Long id);
+  List<TeacherEntity> findAllTeachers();
 
-    boolean addTeacher(TeacherEntity teacher);
+  TeacherEntity findTeacherById(Long id);
+
+  TeacherEntity findSubjectsByTeacherId(Long id);
+
+  boolean addTeacher(TeacherEntity teacher);
 }

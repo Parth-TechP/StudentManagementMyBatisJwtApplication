@@ -8,7 +8,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -16,16 +20,16 @@ import java.util.List;
 @RequestMapping("/mess-owners")
 public class MessOwnerController {
 
-    @Autowired
-    MessOwnerService messOwnerService;
+  @Autowired
+  MessOwnerService messOwnerService;
 
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")
-    public List<MessOwnerDisplayDto> findAllMessOwners(){return messOwnerService.getAllMessOwners();}
+  @GetMapping
+  @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")public List<MessOwnerDisplayDto> findAllMessOwners() {
+    return messOwnerService.getAllMessOwners();
+  }
 
-    @PostMapping
-    @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')")
-    public MessOwnerResponseDto addMessOwners(@RequestBody MessOwnerAdditionDto messOwnerAdditionDto){
-        return messOwnerService.addMessOwner(messOwnerAdditionDto);
-    }
+  @PostMapping
+  @PreAuthorize("hasRole('ROLE_ROLE_OFFICE_ADMIN')") public MessOwnerResponseDto addMessOwners(@RequestBody MessOwnerAdditionDto messOwnerAdditionDto) {
+    return messOwnerService.addMessOwner(messOwnerAdditionDto);
+  }
 }

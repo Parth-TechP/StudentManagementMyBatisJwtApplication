@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HostelEntity {
-    private Long id;
-    private String name;
-    private Integer capacity;
-    private Integer rating;
-    private String location;
+  private Long id;
+  private String name;
+  private Integer capacity;
+  private Integer rating;
+  private String location;
 }

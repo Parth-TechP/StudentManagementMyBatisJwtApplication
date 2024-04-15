@@ -17,36 +17,31 @@ import java.util.List;
 @Service
 public class SubjectService {
 
-    @Autowired
-    SubjectMapper subjectMapper;
+  @Autowired
+  SubjectMapper subjectMapper;
 
-    @Autowired
-    SubjectRepository subjectRepository;
+  @Autowired
+  SubjectRepository subjectRepository;
 
-    @Autowired
-    TeacherRepository teacherRepository;
+  @Autowired
+    TeacherRepository teacherRepository;public List<SubjectDisplayDto> getAllSubjects() {
+    return subjectMapper.convertListOfSubjectEntityToSubjectDisplayDto(subjectRepository.findAllSubjects());
+  }
 
-    public List<SubjectDisplayDto> getAllSubjects(){
-        return subjectMapper.convertListOfSubjectEntityToSubjectDisplayDto(subjectRepository.findAllSubjects());
-    }
-
-    public SubjectTeacherDisplayDto getSubjectById(Long id){
-        SubjectEntity subject = subjectRepository.findSubjectById(id);
+  public SubjectTeacherDisplayDto getSubjectById(Long id) {
+    SubjectEntity subject = subjectRepository.findSubjectById(id);
         if (subject != null){
             return subjectMapper.convertSubjectEntityToSubjectTeacherDisplayDto(subject);
         } else {
             throw new ResourceNotFoundException(id);
-        }
-    }
+  }}
 
-    public SubjectDisplayDto addSubject(SubjectAdditionDto subjectAdditionDto){
-        TeacherEntity teacher = teacherRepository.findTeacherById(subjectAdditionDto.getTeacherId());
+  public SubjectDisplayDto addSubject(SubjectAdditionDto subjectAdditionDto) {
+    TeacherEntity teacher = teacherRepository.findTeacherById(subjectAdditionDto.getTeacherId());
         if (teacher == null){
             throw new ResourceNotFoundException(subjectAdditionDto.getTeacherId());
-        }else {
-            SubjectEntity subjectEntity = subjectMapper.convertSubjectAdditionDtoToSubjectEntity(subjectAdditionDto);
-            subjectRepository.addSubject(subjectEntity);
-            return subjectMapper.convertSubjectEntityToSubjectDisplayDto(subjectEntity);
-        }
-    }
+        }else {SubjectEntity subjectEntity = subjectMapper.convertSubjectAdditionDtoToSubjectEntity(subjectAdditionDto);
+    subjectRepository.addSubject(subjectEntity);
+    return subjectMapper.convertSubjectEntityToSubjectDisplayDto(subjectEntity);
+  }}
 }

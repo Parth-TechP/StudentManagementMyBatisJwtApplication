@@ -4,9 +4,10 @@ import com.parth.StudentManagementMyBatisJwt.config.MessManagementConnMapper;
 import com.parth.StudentManagementMyBatisJwt.model.messManagement.HostelEntity;
 
 import java.util.List;
+
 @MessManagementConnMapper
 public interface HostelRepository {
-    List<HostelEntity> findAllHostels();
+  List<HostelEntity> findAllHostels();
 
-    void addHostel(HostelEntity hostelEntity);
+  void addHostel(HostelEntity hostelEntity);
 }

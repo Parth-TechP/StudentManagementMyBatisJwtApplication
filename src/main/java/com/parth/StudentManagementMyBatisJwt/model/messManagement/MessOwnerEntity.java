@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessOwnerEntity {
-    private Long id;
-    private String name;
-    private String contactNumber;
-    private String email;
-    private MessEntity mess;
+  private Long id;
+  private String name;
+  private String contactNumber;
+  private String email;
+  private MessEntity mess;
 }

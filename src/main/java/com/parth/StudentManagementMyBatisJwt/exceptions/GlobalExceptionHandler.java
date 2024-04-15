@@ -12,21 +12,15 @@ import java.util.Date;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(ResourceNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorDetails studentNotFoundException(ResourceNotFoundException ex, WebRequest request){
-        return new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
+  @ExceptionHandler(ResourceNotFoundException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorDetails studentNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+    return new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
     }
 
     @ExceptionHandler(DuplicateDataException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorDetails duplicateDataException(DuplicateDataException ex, WebRequest request){
-        return new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-    }
-
-    @ExceptionHandler(UnauthorizedAccessException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorDetails unauthorizedAccessException(UnauthorizedAccessException ex, WebRequest request){
         return new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
     }
 }

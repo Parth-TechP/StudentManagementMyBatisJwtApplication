@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("com.parth.StudentManagementMyBatisJwt.repository")
 public class StudentManagementMyBatisJwtApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(StudentManagementMyBatisJwtApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(StudentManagementMyBatisJwtApplication.class, args);
+  }
 
 }

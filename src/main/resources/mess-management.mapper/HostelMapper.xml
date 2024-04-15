@@ -3,18 +3,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.parth.StudentManagementMyBatisJwt.repository.messManagement.HostelRepository">
     <resultMap id="HostelResultMap" type="com.parth.StudentManagementMyBatisJwt.model.messManagement.HostelEntity">
-        <id property="id" column="id" />
-        <result property="name" column="name" />
-        <result property="capacity" column="capacity" />
-        <result property="rating" column="rating" />
-        <result property="location" column="location" />
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="capacity" column="capacity"/>
+        <result property="rating" column="rating"/>
+        <result property="location" column="location"/>
     </resultMap>
 
-    <select id="findAllHostels" resultMap="HostelResultMap" >
+    <select id="findAllHostels" resultMap="HostelResultMap">
         select * from hostel;
     </select>
 
-    <insert id="addHostel" keyProperty="id" keyColumn="id" useGeneratedKeys="true" parameterType="com.parth.StudentManagementMyBatisJwt.model.messManagement.HostelEntity" >
+    <insert id="addHostel" keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+            parameterType="com.parth.StudentManagementMyBatisJwt.model.messManagement.HostelEntity">
         insert into hostel (name, capacity, rating, location) values (#{name}, #{capacity}, #{rating}, #{location})
     </insert>
 </mapper>
