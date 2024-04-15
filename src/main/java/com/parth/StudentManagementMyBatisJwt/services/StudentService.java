@@ -4,6 +4,7 @@ import com.parth.StudentManagementMyBatisJwt.dto.StudentAdditionDto;
 import com.parth.StudentManagementMyBatisJwt.dto.StudentDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.dto.StudentSubjectsAdditionDto;
 import com.parth.StudentManagementMyBatisJwt.dto.StudentSubjectsDisplayDto;
+import com.parth.StudentManagementMyBatisJwt.exceptions.DuplicateDataException;
 import com.parth.StudentManagementMyBatisJwt.exceptions.ResourceNotFoundException;
 import com.parth.StudentManagementMyBatisJwt.exceptions.UnauthorizedAccessException;
 import com.parth.StudentManagementMyBatisJwt.mapstructMapper.StudentMapper;
@@ -47,24 +48,21 @@ public class StudentService {
     }
 
     public StudentSubjectsDisplayDto assignSubjectsToStudent(Long id, StudentSubjectsAdditionDto subjectsAdditionDto)throws ResourceNotFoundException {
-        List<SubjectEntity> subjectEntities =subjectRepository.findAllSubjects();
-        int flag = 0;
-        if(subjectsAdditionDto != null){
-            for(Long subjectId: subjectsAdditionDto.getSubjectIds()){
-                flag = 0;
-                for(SubjectEntity s:subjectEntities){
-                    if(s.getId().equals(subjectId)){
-                        flag = 1;
-                        break;
-                    }
-                }
-                if (flag == 0 && subjectId != null){
+        List<SubjectEntity> subjectEntities = subjectRepository.findAllSubjects();
+        List<SubjectEntity> assignedSubjects = studentRepository.findSubjectsByStudentId(id).getSubjects();
+        if (subjectsAdditionDto != null) {
+            List<Long> subjectIds = subjectsAdditionDto.getSubjectIds();
+            for (Long subjectId : subjectIds) {
+                boolean existsInEntities = subjectEntities.stream().anyMatch(s -> s.getId().equals(subjectId));
+                boolean existsInAssigned = assignedSubjects.stream().anyMatch(s -> s.getId().equals(subjectId));
+                if (!existsInEntities) {
                     throw new ResourceNotFoundException(subjectId);
                 }
+                if (existsInAssigned) {
+                    throw new DuplicateDataException(subjectId);
+                }
             }
-        }
-        if (subjectsAdditionDto != null) {
-            studentRepository.assignSubjectsToStudent(id, subjectsAdditionDto.getSubjectIds());
+            studentRepository.assignSubjectsToStudent(id, subjectIds);
         }
         return studentMapper.convertStudentEntityToStudentSubjectsDisplayDto(studentRepository.findSubjectsByStudentId(id));
     }
