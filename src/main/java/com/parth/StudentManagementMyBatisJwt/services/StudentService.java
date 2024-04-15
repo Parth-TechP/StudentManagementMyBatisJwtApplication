@@ -6,14 +6,12 @@ import com.parth.StudentManagementMyBatisJwt.dto.StudentSubjectsAdditionDto;
 import com.parth.StudentManagementMyBatisJwt.dto.StudentSubjectsDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.exceptions.DuplicateDataException;
 import com.parth.StudentManagementMyBatisJwt.exceptions.ResourceNotFoundException;
-import com.parth.StudentManagementMyBatisJwt.exceptions.UnauthorizedAccessException;
 import com.parth.StudentManagementMyBatisJwt.mapstructMapper.StudentMapper;
 import com.parth.StudentManagementMyBatisJwt.model.StudentEntity;
 import com.parth.StudentManagementMyBatisJwt.model.SubjectEntity;
 import com.parth.StudentManagementMyBatisJwt.repository.StudentRepository;
 import com.parth.StudentManagementMyBatisJwt.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,11 +32,23 @@ public class StudentService {
     }
 
     public StudentDisplayDto getStudentById(Long id){
-        return studentMapper.convertStudentEntityToStudentDisplayDto(studentRepository.findStudentById(id));
+        StudentEntity student = studentRepository.findStudentById(id);
+        if (student != null){
+            return studentMapper.convertStudentEntityToStudentDisplayDto(student);
+        }
+        else {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     public StudentSubjectsDisplayDto findSubjectsByStudentId(Long id){
-        return studentMapper.convertStudentEntityToStudentSubjectsDisplayDto(studentRepository.findSubjectsByStudentId(id));
+        StudentEntity student = studentRepository.findStudentById(id);
+        if (student != null){
+            return studentMapper.convertStudentEntityToStudentSubjectsDisplayDto(studentRepository.findSubjectsByStudentId(id));
+        }
+        else {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     public StudentDisplayDto addStudent(StudentAdditionDto studentAdditionDto){

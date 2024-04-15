@@ -3,12 +3,11 @@ package com.parth.StudentManagementMyBatisJwt.services;
 import com.parth.StudentManagementMyBatisJwt.dto.TeacherAdditionDto;
 import com.parth.StudentManagementMyBatisJwt.dto.TeacherDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.dto.TeacherSubjectsDisplayDto;
-import com.parth.StudentManagementMyBatisJwt.exceptions.UnauthorizedAccessException;
+import com.parth.StudentManagementMyBatisJwt.exceptions.ResourceNotFoundException;
 import com.parth.StudentManagementMyBatisJwt.mapstructMapper.TeacherMapper;
 import com.parth.StudentManagementMyBatisJwt.model.TeacherEntity;
 import com.parth.StudentManagementMyBatisJwt.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,11 +26,21 @@ public class TeacherService {
     }
 
     public TeacherDisplayDto getTeacherById(Long id){
-        return teacherMapper.convertTeacherEntityToTeacherDisplayDto(teacherRepository.findSubjectsByTeacherId(id));
+        TeacherEntity teacher = teacherRepository.findSubjectsByTeacherId(id);
+        if (teacher != null){
+            return teacherMapper.convertTeacherEntityToTeacherDisplayDto(teacher);
+        } else {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     public TeacherSubjectsDisplayDto findSubjectsByTeacherId(Long id){
-        return teacherMapper.convertTeacherEntityToTeacherSubjectsDisplayDto(teacherRepository.findSubjectsByTeacherId(id));
+        TeacherEntity teacher = teacherRepository.findSubjectsByTeacherId(id);
+        if (teacher != null){
+            return teacherMapper.convertTeacherEntityToTeacherSubjectsDisplayDto(teacher);
+        } else{
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     public TeacherDisplayDto addTeacher(TeacherAdditionDto teacherAdditionDto){

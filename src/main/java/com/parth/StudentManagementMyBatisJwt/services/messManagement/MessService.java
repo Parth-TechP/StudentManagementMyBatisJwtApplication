@@ -3,8 +3,10 @@ package com.parth.StudentManagementMyBatisJwt.services.messManagement;
 import com.parth.StudentManagementMyBatisJwt.dto.messManagement.MessAdditionDto;
 import com.parth.StudentManagementMyBatisJwt.dto.messManagement.MessDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.dto.messManagement.MessOwnersInfoDisplayDto;
+import com.parth.StudentManagementMyBatisJwt.exceptions.ResourceNotFoundException;
 import com.parth.StudentManagementMyBatisJwt.mapstructMapper.messManagement.MessMapper;
 import com.parth.StudentManagementMyBatisJwt.model.messManagement.MessEntity;
+import com.parth.StudentManagementMyBatisJwt.model.messManagement.MessOwnerEntity;
 import com.parth.StudentManagementMyBatisJwt.repository.messManagement.MessOwnerRepository;
 import com.parth.StudentManagementMyBatisJwt.repository.messManagement.MessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,12 @@ public class MessService {
     }
 
     public MessOwnersInfoDisplayDto findOwnersByMessID(Long id){
-        return messMapper.convertMessEntityToMessOwnersInfoDisplayDto(messRepository.findMessById(id), messOwnerRepository.findOwnersByMessId(id));
-
+        MessEntity messEntity = messRepository.findMessById(id);
+        if(messEntity != null){
+            return messMapper.convertMessEntityToMessOwnersInfoDisplayDto(messRepository.findMessById(id), messOwnerRepository.findOwnersByMessId(id));
+        }else {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     public MessDisplayDto addMess(MessAdditionDto messAdditionDto){
