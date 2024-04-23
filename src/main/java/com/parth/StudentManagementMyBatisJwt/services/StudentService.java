@@ -66,11 +66,11 @@ public class StudentService {
     if (subjectsAdditionDto != null) {
       List<Long> subjectIds = subjectsAdditionDto.getSubjectIds();
 
-        for (Long subjectId : subjectIds) {
-          boolean existsInEntities = subjectEntities.stream().anyMatch(s -> s.getId().equals(subjectId) );
-          boolean existsInAssigned = assignedSubjects.stream().anyMatch(s ->s.getId().equals(subjectId)) ;
-            if (!existsInEntities) {
-            throw new ResourceNotFoundException(subjectId);
+      for (Long subjectId : subjectIds) {
+        boolean existsInEntities = subjectEntities.stream().anyMatch(s -> s.getId().equals(subjectId));
+        boolean existsInAssigned = assignedSubjects.stream().anyMatch(s -> s.getId().equals(subjectId));
+        if (!existsInEntities) {
+          throw new ResourceNotFoundException(subjectId);
         }
         if (existsInAssigned) {
           throw new DuplicateDataException(subjectId);
@@ -82,24 +82,24 @@ public class StudentService {
     return studentMapper.convertStudentEntityToStudentSubjectsDisplayDto(studentRepository.findSubjectsByStudentId(id));
   }
 
-    @Transactional(transactionManager = "MyBatisSchoolTransactionManager", rollbackFor = DataFormatException.class)
-    public List<StudentSubjectsDisplayDto> assignSubjectsToAllStudents(SubjectAssignmentDto subjectAssignmentDto) {
-        List<Long> subjectIds = new ArrayList<>();
-        for (String name: subjectAssignmentDto.getSubjects()){
-            subjectIds.add(subjectRepository.getSubjectIdBySubjectName(name));
-        }
-
-        List<StudentEntity> studentEntities = studentRepository.findAllStudents(null, null,null);
-
-        List<StudentSubjectsDisplayDto> studentSubjectsDisplayDtos = new ArrayList<>();
-
-        StudentSubjectsAdditionDto subjectsAdditionDto = new StudentSubjectsAdditionDto();
-        subjectsAdditionDto.setSubjectIds(subjectIds);
-
-        for(StudentEntity student: studentEntities){
-            studentSubjectsDisplayDtos.add(assignSubjectsToStudent(student.getId(), subjectsAdditionDto));
-        }
-        return studentSubjectsDisplayDtos;
+  @Transactional(transactionManager = "MyBatisSchoolTransactionManager", rollbackFor = DataFormatException.class)
+  public List<StudentSubjectsDisplayDto> assignSubjectsToAllStudents(SubjectAssignmentDto subjectAssignmentDto) {
+    List<Long> subjectIds = new ArrayList<>();
+    for (String name : subjectAssignmentDto.getSubjects()) {
+      subjectIds.add(subjectRepository.getSubjectIdBySubjectName(name));
     }
+
+    List<StudentEntity> studentEntities = studentRepository.findAllStudents(null, null, null);
+
+    List<StudentSubjectsDisplayDto> studentSubjectsDisplayDtos = new ArrayList<>();
+
+    StudentSubjectsAdditionDto subjectsAdditionDto = new StudentSubjectsAdditionDto();
+    subjectsAdditionDto.setSubjectIds(subjectIds);
+
+    for (StudentEntity student : studentEntities) {
+      studentSubjectsDisplayDtos.add(assignSubjectsToStudent(student.getId(), subjectsAdditionDto));
+    }
+    return studentSubjectsDisplayDtos;
+  }
 
 }

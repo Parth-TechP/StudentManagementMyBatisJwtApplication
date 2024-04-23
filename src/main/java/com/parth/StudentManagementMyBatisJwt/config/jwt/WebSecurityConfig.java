@@ -30,12 +30,13 @@ public class WebSecurityConfig {
   private String secret;
 
   @Autowired
-    private CustomAccessDeniedHandler customAccessDeniedHandler;
+  private CustomAccessDeniedHandler customAccessDeniedHandler;
 
-    @Autowired JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+  @Autowired
+  JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    private static final String[] AUTH_URL_WHITE_LIST = {
-            "/swagger-ui/**",
+  private static final String[] AUTH_URL_WHITE_LIST = {
+    "/swagger-ui/**",
     "/v3/api-docs/**"
   };
 
@@ -45,8 +46,8 @@ public class WebSecurityConfig {
     SecretKey key = new SecretKeySpec(keyBytes, 0, keyBytes.length, "HmacSHA512");
     NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withSecretKey(key).macAlgorithm(MacAlgorithm.HS512).build();
 
-        OAuth2TokenValidator<Jwt> defaultValidators = JwtValidators.createDefault();
-        jwtDecoder.setJwtValidator(defaultValidators);
+    OAuth2TokenValidator<Jwt> defaultValidators = JwtValidators.createDefault();
+    jwtDecoder.setJwtValidator(defaultValidators);
 
     return jwtDecoder;
   }
@@ -67,9 +68,10 @@ public class WebSecurityConfig {
     return httpSecurity.authorizeHttpRequests(authorize -> authorize
         .requestMatchers(AUTH_URL_WHITE_LIST).permitAll()
         .anyRequest().authenticated())
-      .oauth2ResourceServer(configure -> configure.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())).authenticationEntryPoint(jwtAuthenticationEntryPoint))
-                .exceptionHandling(ex -> ex.accessDeniedHandler(customAccessDeniedHandler))
-                .httpBasic(Customizer.withDefaults())
+      .oauth2ResourceServer(configure -> configure.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
+        .authenticationEntryPoint(jwtAuthenticationEntryPoint))
+      .exceptionHandling(ex -> ex.accessDeniedHandler(customAccessDeniedHandler))
+      .httpBasic(Customizer.withDefaults())
       .build();
   }
 }
