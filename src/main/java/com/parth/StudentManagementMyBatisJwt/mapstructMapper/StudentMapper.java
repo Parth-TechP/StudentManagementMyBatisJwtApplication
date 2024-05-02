@@ -30,7 +30,7 @@ public interface StudentMapper {
     @Mapping(source = "age", target = "age")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "city", target = "city")
-    @Mapping(source = "subjects", target = "subjects", ignore = true)
+    @Mapping(source = "subjects", target = "subjects")
     StudentSubjectsDisplayDto convertStudentEntityToStudentSubjectsDisplayDto(StudentEntity studentEntity);
 
     List<StudentDisplayDto> convertListOfStudentEntityToStudentDisplayDto(List<StudentEntity> studentEntity);
