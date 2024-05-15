@@ -11,6 +11,8 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
@@ -18,6 +20,7 @@ import javax.sql.DataSource;
   "MessManagementSessionFactory")
 
 @Configuration
+@EnableTransactionManagement
 public class MessManagementDataSourceConfig {
   @Bean(name = "dataSource2")
   @ConfigurationProperties(prefix = "spring.datasource.management")
@@ -47,4 +50,7 @@ public class MessManagementDataSourceConfig {
   public DataSourceProperties secondDataSourceProperties() {
     return new DataSourceProperties();
   }
+
+    @Bean(name = "MessTransactionManagement")
+    public DataSourceTransactionManager messTransactionManager(){return new DataSourceTransactionManager(MessManagementDataSource());}
 }
