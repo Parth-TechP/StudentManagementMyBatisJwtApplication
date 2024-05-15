@@ -58,7 +58,7 @@ public class StudentService {
     return studentMapper.convertStudentEntityToStudentDisplayDto(studentEntity);
   }
 
-  @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = DataFormatException.class)
+  @Transactional(transactionManager = "MyBatisSchoolTransactionManager", rollbackFor = DataFormatException.class)
   public StudentSubjectsDisplayDto assignSubjectsToStudent(Long id, StudentSubjectsAdditionDto subjectsAdditionDto)
     throws ResourceNotFoundException {
     List<SubjectEntity> subjectEntities = subjectRepository.findAllSubjects();
