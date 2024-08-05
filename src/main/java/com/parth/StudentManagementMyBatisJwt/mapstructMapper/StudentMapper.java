@@ -3,6 +3,7 @@ package com.parth.StudentManagementMyBatisJwt.mapstructMapper;
 import com.parth.StudentManagementMyBatisJwt.dto.StudentAdditionDto;
 import com.parth.StudentManagementMyBatisJwt.dto.StudentDisplayDto;
 import com.parth.StudentManagementMyBatisJwt.dto.StudentSubjectsDisplayDto;
+import com.parth.StudentManagementMyBatisJwt.dto.kafka.StudentAdditionReceiveDto;
 import com.parth.StudentManagementMyBatisJwt.model.StudentEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -34,4 +35,6 @@ public interface StudentMapper {
   StudentSubjectsDisplayDto convertStudentEntityToStudentSubjectsDisplayDto(StudentEntity studentEntity);
 
   List<StudentDisplayDto> convertListOfStudentEntityToStudentDisplayDto(List<StudentEntity> studentEntity);
+
+  StudentAdditionDto convertStudentAdditionReceiveDtoToStudentAdditionDto(StudentAdditionReceiveDto studentAdditionReceiveDto);
 }
